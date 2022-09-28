@@ -114,6 +114,31 @@ function Tree(initialArray) {
     return [previousNode, currentNode];
   }
 
+  function levelOrder(callback = null) {
+    if (!root) {
+      return [];
+    }
+    const queue = [root];
+    const backupArray = [];
+    while (queue.length > 0) {
+      const currentNode = queue.shift();
+      if (currentNode.left) {
+        queue.push(currentNode.left);
+      }
+
+      if (currentNode.right) {
+        queue.push(currentNode.right);
+      }
+
+      if (callback) {
+        callback(currentNode);
+      } else {
+        backupArray.push(currentNode.data);
+      }
+    }
+    return !callback ? backupArray : null;
+  }
+
   function prettyPrint(rootNode, prefix = '', isLeft = true) {
     if (rootNode.right !== null) {
       prettyPrint(
@@ -134,6 +159,7 @@ function Tree(initialArray) {
     insert,
     remove,
     find,
+    levelOrder,
     prettyPrint,
   };
 }

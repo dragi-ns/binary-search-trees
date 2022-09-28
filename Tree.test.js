@@ -87,4 +87,24 @@ describe('Tree', () => {
     const removedNode = tree.remove(69);
     expect(removedNode).toBe(null);
   });
+
+  it('returns an array of values if no function is given', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    expect(tree.levelOrder()).toEqual([8, 4, 67, 3, 7, 23, 6345, 1, 5, 9, 324]);
+  });
+
+  it('returns an empty array if a tree is empty', () => {
+    const tree = Tree([]);
+    expect(tree.levelOrder()).toEqual([]);
+  });
+
+  it('calls callback function instead of returning an array', () => {
+    const callback = jest.fn();
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    expect(tree.levelOrder(callback)).toBe(null);
+    expect(callback.mock.calls.length).toBe(11);
+    expect(callback.mock.calls[0][0].data).toBe(8);
+    expect(callback.mock.calls[5][0].data).toBe(23);
+    expect(callback.mock.calls[10][0].data).toBe(324);
+  });
 });
