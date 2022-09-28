@@ -139,6 +139,58 @@ function Tree(initialArray) {
     return !callback ? backupArray : null;
   }
 
+  function inorder(rootNode, callback = null, backupArray = []) {
+    if (!rootNode) {
+      return !callback ? [] : null;
+    }
+
+    inorder(rootNode.left, callback, backupArray);
+
+    if (callback) {
+      callback(rootNode);
+    } else {
+      backupArray.push(rootNode.data);
+    }
+
+    inorder(rootNode.right, callback, backupArray);
+
+    return !callback ? backupArray : null;
+  }
+
+  function preorder(rootNode, callback = null, backupArray = []) {
+    if (!rootNode) {
+      return !callback ? [] : null;
+    }
+
+    if (callback) {
+      callback(rootNode);
+    } else {
+      backupArray.push(rootNode.data);
+    }
+
+    preorder(rootNode.left, callback, backupArray);
+    preorder(rootNode.right, callback, backupArray);
+
+    return !callback ? backupArray : null;
+  }
+
+  function postorder(rootNode, callback = null, backupArray = []) {
+    if (!rootNode) {
+      return !callback ? [] : null;
+    }
+
+    postorder(rootNode.left, callback, backupArray);
+    postorder(rootNode.right, callback, backupArray);
+
+    if (callback) {
+      callback(rootNode);
+    } else {
+      backupArray.push(rootNode.data);
+    }
+
+    return !callback ? backupArray : null;
+  }
+
   function prettyPrint(rootNode, prefix = '', isLeft = true) {
     if (rootNode.right !== null) {
       prettyPrint(
@@ -160,6 +212,9 @@ function Tree(initialArray) {
     remove,
     find,
     levelOrder,
+    inorder,
+    preorder,
+    postorder,
     prettyPrint,
   };
 }

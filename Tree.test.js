@@ -107,4 +107,70 @@ describe('Tree', () => {
     expect(callback.mock.calls[5][0].data).toBe(23);
     expect(callback.mock.calls[10][0].data).toBe(324);
   });
+
+  it('returns an array of values if no function is given', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    expect(tree.inorder(tree.root)).toEqual([
+      1, 3, 4, 5, 7, 8, 9, 23, 67, 324, 6345,
+    ]);
+  });
+
+  it('returns an empty array if a tree is empty', () => {
+    const tree = Tree([]);
+    expect(tree.inorder(tree.root)).toEqual([]);
+  });
+
+  it('calls callback function instead of returning an array', () => {
+    const callback = jest.fn();
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    expect(tree.inorder(tree.root, callback)).toBe(null);
+    expect(callback.mock.calls.length).toBe(11);
+    expect(callback.mock.calls[0][0].data).toBe(1);
+    expect(callback.mock.calls[5][0].data).toBe(8);
+    expect(callback.mock.calls[10][0].data).toBe(6345);
+  });
+
+  it('returns an array of values if no function is given', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    expect(tree.preorder(tree.root)).toEqual([
+      8, 4, 3, 1, 7, 5, 67, 23, 9, 6345, 324,
+    ]);
+  });
+
+  it('returns an empty array if a tree is empty', () => {
+    const tree = Tree([]);
+    expect(tree.preorder(tree.root)).toEqual([]);
+  });
+
+  it('calls callback function instead of returning an array', () => {
+    const callback = jest.fn();
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    expect(tree.preorder(tree.root, callback)).toBe(null);
+    expect(callback.mock.calls.length).toBe(11);
+    expect(callback.mock.calls[0][0].data).toBe(8);
+    expect(callback.mock.calls[5][0].data).toBe(5);
+    expect(callback.mock.calls[10][0].data).toBe(324);
+  });
+
+  it('returns an array of values if no function is given', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    expect(tree.postorder(tree.root)).toEqual([
+      1, 3, 5, 7, 4, 9, 23, 324, 6345, 67, 8,
+    ]);
+  });
+
+  it('returns an empty array if a tree is empty', () => {
+    const tree = Tree([]);
+    expect(tree.postorder(tree.root)).toEqual([]);
+  });
+
+  it('calls callback function instead of returning an array', () => {
+    const callback = jest.fn();
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    expect(tree.postorder(tree.root, callback)).toBe(null);
+    expect(callback.mock.calls.length).toBe(11);
+    expect(callback.mock.calls[0][0].data).toBe(1);
+    expect(callback.mock.calls[5][0].data).toBe(9);
+    expect(callback.mock.calls[10][0].data).toBe(8);
+  });
 });
