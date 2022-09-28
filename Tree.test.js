@@ -59,4 +59,32 @@ describe('Tree', () => {
     const node = tree.find(tree.root, 69);
     expect(node).toBe(null);
   });
+
+  it('correctly removes a leaf node', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    const removedNode = tree.remove(5);
+    expect(removedNode.data).toBe(5);
+    expect(tree.root.left.right.left).toBe(null);
+  });
+
+  it('correctly removes a node with only one child node', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    const removedNode = tree.remove(6345);
+    expect(removedNode.data).toBe(6345);
+    expect(tree.root.right.right.data).toBe(324);
+  });
+
+  it('correctly removes a node with two children', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    const removedNode = tree.remove(4);
+    expect(removedNode.data).toBe(4);
+    expect(tree.root.left.data).toBe(5);
+    expect(tree.root.left.right.left).toBe(null);
+  });
+
+  it("returns null if a node with a given value doesn't exists", () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    const removedNode = tree.remove(69);
+    expect(removedNode).toBe(null);
+  });
 });

@@ -44,20 +44,74 @@ function Tree(initialArray) {
     return rootNode;
   }
 
-  function find(rootNode, value) {
-    if (!rootNode) {
+  function remove(value) {
+    const [previousNode, currentNode] = findWithPrevious(root, value);
+    if (currentNode === null) {
       return null;
     }
 
-    if (value > rootNode.data) {
-      return find(rootNode.right, value);
+    const currentNodeDirection =
+      previousNode.left === currentNode ? 'left' : 'right';
+
+    // Leaf node
+    if (!currentNode.left && !currentNode.right) {
+      previousNode[currentNodeDirection] = null;
+      return currentNode;
     }
 
-    if (value < rootNode.data) {
-      return find(rootNode.left, value);
+    // One right child
+    if (!currentNode.left && currentNode.right) {
+      previousNode[currentNodeDirection] = currentNode.right;
+      return currentNode;
     }
 
-    return rootNode;
+    // One left child
+    if (!currentNode.right && currentNode.left) {
+      previousNode[currentNodeDirection] = currentNode.left;
+      return currentNode;
+    }
+
+    // It has both children
+    const [previousBiggestNode, currentBiggestNode] =
+      findNextBigestNode(currentNode);
+
+    currentNode.data = currentBiggestNode.data;
+    previousBiggestNode.left = currentBiggestNode.right;
+
+    currentBiggestNode.left = currentNode.left;
+    currentBiggestNode.right = currentNode.right;
+    currentBiggestNode.data = value;
+    return currentBiggestNode;
+  }
+
+  function find(rootNode, value) {
+    return findWithPrevious(rootNode, value)[1];
+  }
+
+  function findWithPrevious(rootNode, value) {
+    let previousNode = null;
+    let currentNode = rootNode;
+    while (currentNode !== null && currentNode.data !== value) {
+      if (currentNode.data < value) {
+        previousNode = currentNode;
+        currentNode = previousNode.right;
+      } else {
+        previousNode = currentNode;
+        currentNode = previousNode.left;
+      }
+    }
+
+    return [previousNode, currentNode];
+  }
+
+  function findNextBigestNode(initialCurrentNode) {
+    let previousNode = initialCurrentNode.right;
+    let currentNode = previousNode.left;
+    while (currentNode.left !== null) {
+      previousNode = currentNode;
+      currentNode = previousNode.left;
+    }
+    return [previousNode, currentNode];
   }
 
   function prettyPrint(rootNode, prefix = '', isLeft = true) {
@@ -78,6 +132,7 @@ function Tree(initialArray) {
   return {
     root,
     insert,
+    remove,
     find,
     prettyPrint,
   };
