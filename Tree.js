@@ -44,6 +44,22 @@ function Tree(initialArray) {
     return rootNode;
   }
 
+  function find(rootNode, value) {
+    if (!rootNode) {
+      return null;
+    }
+
+    if (value > rootNode.data) {
+      return find(rootNode.right, value);
+    }
+
+    if (value < rootNode.data) {
+      return find(rootNode.left, value);
+    }
+
+    return rootNode;
+  }
+
   function prettyPrint(rootNode, prefix = '', isLeft = true) {
     if (rootNode.right !== null) {
       prettyPrint(
@@ -62,6 +78,7 @@ function Tree(initialArray) {
   return {
     root,
     insert,
+    find,
     prettyPrint,
   };
 }

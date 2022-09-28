@@ -42,7 +42,21 @@ describe('Tree', () => {
   it("doesn't insert a node as a leaf if given value already exists", () => {
     const tree = Tree([1, 7, 4, 23, 8, 9]);
     tree.insert(tree.root, 23);
-    expect(tree.root.right.right).toBe(null);
     expect(tree.root.right.left.data).toBe(9);
+    expect(tree.root.right.right).toBe(null);
+  });
+
+  it('returns a node with the given value', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9]);
+    const node = tree.find(tree.root, 23);
+    expect(node).not.toBe(null);
+    expect(node.left.data).toBe(9);
+    expect(node.right).toBe(null);
+  });
+
+  it("returns null if a node with the given value doesn't exist", () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9]);
+    const node = tree.find(tree.root, 69);
+    expect(node).toBe(null);
   });
 });
