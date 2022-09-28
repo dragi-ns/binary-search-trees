@@ -32,4 +32,17 @@ describe('Tree', () => {
     expect(tree.root.right.right.left.data).toBe(324);
     expect(tree.root.right.right.right).toBe(null);
   });
+
+  it('inserts a node as a leaf in the correct location', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9]);
+    tree.insert(tree.root, 69);
+    expect(tree.root.right.right.data).toBe(69);
+  });
+
+  it("doesn't insert a node as a leaf if given value already exists", () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9]);
+    tree.insert(tree.root, 23);
+    expect(tree.root.right.right).toBe(null);
+    expect(tree.root.right.left.data).toBe(9);
+  });
 });

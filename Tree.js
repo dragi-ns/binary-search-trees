@@ -28,19 +28,40 @@ function Tree(initialArray) {
     return rootNode;
   }
 
-  function prettyPrint(node, prefix = '', isLeft = true) {
-    if (node.right !== null) {
-      prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+  function insert(rootNode, value) {
+    if (!rootNode) {
+      return Node(value);
+    }
+
+    if (value > rootNode.data) {
+      // eslint-disable-next-line no-param-reassign
+      rootNode.right = insert(rootNode.right, value);
+    } else if (value < rootNode.data) {
+      // eslint-disable-next-line no-param-reassign
+      rootNode.left = insert(rootNode.left, value);
+    }
+
+    return rootNode;
+  }
+
+  function prettyPrint(rootNode, prefix = '', isLeft = true) {
+    if (rootNode.right !== null) {
+      prettyPrint(
+        rootNode.right,
+        `${prefix}${isLeft ? '│   ' : '    '}`,
+        false
+      );
     }
     // eslint-disable-next-line no-console
-    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-    if (node.left !== null) {
-      prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${rootNode.data}`);
+    if (rootNode.left !== null) {
+      prettyPrint(rootNode.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
   }
 
   return {
     root,
+    insert,
     prettyPrint,
   };
 }
