@@ -2,7 +2,7 @@ import Node from './Node';
 
 function Tree(initialArray) {
   /* eslint-disable no-use-before-define */
-  const root = buildTree(cleanArray(initialArray));
+  let root = buildTree(cleanArray(initialArray));
 
   function cleanArray(dirtyArray) {
     return [...new Set(dirtyArray)].sort((a, b) => {
@@ -214,6 +214,10 @@ function Tree(initialArray) {
     return Math.abs(height(root.left) - height(root.right)) < 2;
   }
 
+  function rebalance() {
+    root = buildTree(inorder(root));
+  }
+
   function prettyPrint(rootNode, prefix = '', isLeft = true) {
     if (rootNode.right !== null) {
       prettyPrint(
@@ -241,6 +245,7 @@ function Tree(initialArray) {
     height,
     depth,
     isBalanced,
+    rebalance,
     prettyPrint,
   };
 }
