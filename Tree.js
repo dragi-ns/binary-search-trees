@@ -28,20 +28,24 @@ function Tree(initialArray) {
     return rootNode;
   }
 
-  function insert(rootNode, value) {
+  function insertRec(rootNode, value) {
     if (!rootNode) {
       return Node(value);
     }
 
     if (value > rootNode.data) {
       // eslint-disable-next-line no-param-reassign
-      rootNode.right = insert(rootNode.right, value);
+      rootNode.right = insertRec(rootNode.right, value);
     } else if (value < rootNode.data) {
       // eslint-disable-next-line no-param-reassign
-      rootNode.left = insert(rootNode.left, value);
+      rootNode.left = insertRec(rootNode.left, value);
     }
 
     return rootNode;
+  }
+
+  function insert(value) {
+    return insertRec(root, value);
   }
 
   function remove(value) {
@@ -84,8 +88,8 @@ function Tree(initialArray) {
     return currentBiggestNode;
   }
 
-  function find(rootNode, value) {
-    return findWithPrevious(rootNode, value)[1];
+  function find(value) {
+    return findWithPrevious(root, value)[1];
   }
 
   function findWithPrevious(rootNode, value) {
@@ -139,12 +143,12 @@ function Tree(initialArray) {
     return !callback ? backupArray : null;
   }
 
-  function inorder(rootNode, callback = null, backupArray = []) {
+  function inorder(callback = null, rootNode = root, backupArray = []) {
     if (!rootNode) {
       return !callback ? [] : null;
     }
 
-    inorder(rootNode.left, callback, backupArray);
+    inorder(callback, rootNode.left, backupArray);
 
     if (callback) {
       callback(rootNode);
@@ -152,12 +156,12 @@ function Tree(initialArray) {
       backupArray.push(rootNode.data);
     }
 
-    inorder(rootNode.right, callback, backupArray);
+    inorder(callback, rootNode.right, backupArray);
 
     return !callback ? backupArray : null;
   }
 
-  function preorder(rootNode, callback = null, backupArray = []) {
+  function preorder(callback = null, rootNode = root, backupArray = []) {
     if (!rootNode) {
       return !callback ? [] : null;
     }
@@ -168,19 +172,19 @@ function Tree(initialArray) {
       backupArray.push(rootNode.data);
     }
 
-    preorder(rootNode.left, callback, backupArray);
-    preorder(rootNode.right, callback, backupArray);
+    preorder(callback, rootNode.left, backupArray);
+    preorder(callback, rootNode.right, backupArray);
 
     return !callback ? backupArray : null;
   }
 
-  function postorder(rootNode, callback = null, backupArray = []) {
+  function postorder(callback = null, rootNode = root, backupArray = []) {
     if (!rootNode) {
       return !callback ? [] : null;
     }
 
-    postorder(rootNode.left, callback, backupArray);
-    postorder(rootNode.right, callback, backupArray);
+    postorder(callback, rootNode.left, backupArray);
+    postorder(callback, rootNode.right, backupArray);
 
     if (callback) {
       callback(rootNode);
@@ -198,16 +202,20 @@ function Tree(initialArray) {
     return 1 + Math.max(height(node.left), height(node.right));
   }
 
-  function depth(rootNode, node) {
+  function depthRec(rootNode, node) {
     if (rootNode.data === node.data) {
       return 0;
     }
 
     if (rootNode.data < node.data) {
-      return 1 + depth(rootNode.right, node);
+      return 1 + depthRec(rootNode.right, node);
     }
 
-    return 1 + depth(rootNode.left, node);
+    return 1 + depthRec(rootNode.left, node);
+  }
+
+  function depth(node) {
+    return depthRec(root, node);
   }
 
   function isBalanced() {
@@ -215,7 +223,7 @@ function Tree(initialArray) {
   }
 
   function rebalance() {
-    root = buildTree(inorder(root));
+    root = buildTree(inorder());
   }
 
   function prettyPrint(rootNode, prefix = '', isLeft = true) {

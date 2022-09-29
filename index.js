@@ -7,18 +7,18 @@ console.log(
   tree.isBalanced()
 );
 console.log('Elements in level order: ', tree.levelOrder());
-console.log('Elements in level preorder: ', tree.preorder(tree.root));
-console.log('Elements in level postorder: ', tree.postorder(tree.root));
-console.log('Elements in level inorder: ', tree.inorder(tree.root));
+console.log('Elements in level preorder: ', tree.preorder());
+console.log('Elements in level postorder: ', tree.postorder());
+console.log('Elements in level inorder: ', tree.inorder());
 console.log('Inserting 150 numbers...');
 for (let i = 0; i < 150; i += 1) {
-  tree.insert(tree.root, i);
+  tree.insert(i);
 }
 console.log('Tree shoulde be unbalanced (expected false): ', tree.isBalanced());
 console.log('Balancing tree...');
 tree.rebalance();
 console.log('Tree should be balanced (expected true): ', tree.isBalanced());
 console.log('Elements in level order: ', tree.levelOrder());
-console.log('Elements in level preorder: ', tree.preorder(tree.root));
-console.log('Elements in level postorder: ', tree.postorder(tree.root));
-console.log('Elements in level inorder: ', tree.inorder(tree.root));
+console.log('Elements in level preorder: ', tree.preorder());
+console.log('Elements in level postorder: ', tree.postorder());
+console.log('Elements in level inorder: ', tree.inorder());
