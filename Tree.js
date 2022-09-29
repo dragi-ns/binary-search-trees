@@ -210,6 +210,10 @@ function Tree(initialArray) {
     return 1 + depth(rootNode.left, node);
   }
 
+  function isBalanced() {
+    return Math.abs(height(root.left) - height(root.right)) < 2;
+  }
+
   function prettyPrint(rootNode, prefix = '', isLeft = true) {
     if (rootNode.right !== null) {
       prettyPrint(
@@ -236,6 +240,7 @@ function Tree(initialArray) {
     postorder,
     height,
     depth,
+    isBalanced,
     prettyPrint,
   };
 }

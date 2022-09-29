@@ -200,4 +200,17 @@ describe('Tree', () => {
     const depth = tree.depth(tree.root, node);
     expect(depth).toBe(3);
   });
+
+  it('returns true if a tree is balanced', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    expect(tree.isBalanced()).toBe(true);
+  });
+
+  it('returns false if a tree is not balanced', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    for (let i = 0; i < 150; i += 1) {
+      tree.insert(tree.root, i);
+    }
+    expect(tree.isBalanced()).toBe(false);
+  });
 });
