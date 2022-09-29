@@ -173,4 +173,18 @@ describe('Tree', () => {
     expect(callback.mock.calls[5][0].data).toBe(9);
     expect(callback.mock.calls[10][0].data).toBe(8);
   });
+
+  it('returns 0 if a given node is a leaf node', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    const node = tree.find(324);
+    const height = tree.height(node);
+    expect(height).toBe(0);
+  });
+
+  it('returns correct height for a given node', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    const node = tree.find(tree.root, 4);
+    const height = tree.height(node);
+    expect(height).toBe(2);
+  });
 });

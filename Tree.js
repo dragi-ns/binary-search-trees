@@ -191,6 +191,13 @@ function Tree(initialArray) {
     return !callback ? backupArray : null;
   }
 
+  function height(node) {
+    if (!node || (!node.left && !node.right)) {
+      return 0;
+    }
+    return 1 + Math.max(height(node.left), height(node.right));
+  }
+
   function prettyPrint(rootNode, prefix = '', isLeft = true) {
     if (rootNode.right !== null) {
       prettyPrint(
@@ -215,6 +222,7 @@ function Tree(initialArray) {
     inorder,
     preorder,
     postorder,
+    height,
     prettyPrint,
   };
 }
