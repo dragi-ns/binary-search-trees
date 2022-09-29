@@ -198,6 +198,18 @@ function Tree(initialArray) {
     return 1 + Math.max(height(node.left), height(node.right));
   }
 
+  function depth(rootNode, node) {
+    if (rootNode.data === node.data) {
+      return 0;
+    }
+
+    if (rootNode.data < node.data) {
+      return 1 + depth(rootNode.right, node);
+    }
+
+    return 1 + depth(rootNode.left, node);
+  }
+
   function prettyPrint(rootNode, prefix = '', isLeft = true) {
     if (rootNode.right !== null) {
       prettyPrint(
@@ -223,6 +235,7 @@ function Tree(initialArray) {
     preorder,
     postorder,
     height,
+    depth,
     prettyPrint,
   };
 }

@@ -187,4 +187,17 @@ describe('Tree', () => {
     const height = tree.height(node);
     expect(height).toBe(2);
   });
+
+  it('returns 0 if a given node is a root node', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    const depth = tree.depth(tree.root, tree.root);
+    expect(depth).toBe(0);
+  });
+
+  it('returns correct depth for a given node', () => {
+    const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+    const node = tree.find(tree.root, 9);
+    const depth = tree.depth(tree.root, node);
+    expect(depth).toBe(3);
+  });
 });
